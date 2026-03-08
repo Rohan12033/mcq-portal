@@ -5,11 +5,12 @@
 <title>1st PUC Computer Science MCQ Portal</title>
 
 <style>
+
 body{
-font-family:Arial, sans-serif;
+font-family:Arial;
 background:#eef2f7;
-margin:0;
 text-align:center;
+margin:0;
 }
 
 header{
@@ -30,43 +31,38 @@ box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
 button{
-padding:10px 18px;
-margin:6px;
+padding:10px 20px;
+margin:10px;
 font-size:16px;
 cursor:pointer;
-border:none;
 background:#1f3c88;
 color:white;
+border:none;
 border-radius:5px;
 }
 
-button:hover{
-background:#162c63;
-}
-
 .option{
-display:block;
 background:#f0f0f0;
+padding:12px;
 margin:8px;
-padding:10px;
 border-radius:6px;
 cursor:pointer;
 }
 
 .option:hover{
-background:#dce4ff;
+background:#dbe3ff;
+}
+
+.selected{
+background:#8fa8ff;
 }
 
 .timer{
-font-size:18px;
 color:red;
+font-size:18px;
 margin-bottom:10px;
 }
 
-.review{
-text-align:left;
-margin-top:20px;
-}
 </style>
 </head>
 
@@ -74,25 +70,7 @@ margin-top:20px;
 
 <header>1st PUC Computer Science MCQ Portal</header>
 
-<div class="container" id="home">
-<h2>Select Chapter</h2>
-
-<button onclick="startChapter(1,1200)">Chapter 1</button>
-<button onclick="startChapter(2,900)">Chapter 2</button>
-<button onclick="startChapter(3,600)">Chapter 3</button>
-<button onclick="startChapter(4,600)">Chapter 4</button>
-<button onclick="startChapter(5,900)">Chapter 5</button>
-<button onclick="startChapter(6,900)">Chapter 6</button>
-<button onclick="startChapter(7,900)">Chapter 7</button>
-<button onclick="startChapter(8,900)">Chapter 8</button>
-<button onclick="startChapter(9,900)">Chapter 9</button>
-<button onclick="startChapter(10,900)">Chapter 10</button>
-<button onclick="startChapter(11,600)">Chapter 11</button>
-
-</div>
-
-
-<div class="container" id="quiz" style="display:none">
+<div class="container" id="quiz">
 
 <div class="timer" id="timer"></div>
 
@@ -107,118 +85,60 @@ margin-top:20px;
 
 <div class="container" id="result" style="display:none">
 
-<h2>Quiz Finished</h2>
+<h2>Quiz Completed</h2>
 
 <p id="score"></p>
 <p id="timeTaken"></p>
 
-<h3>Review Answers</h3>
-<div class="review" id="review"></div>
-
-<button onclick="location.reload()">Back to Home</button>
+<button onclick="location.reload()">Restart</button>
 
 </div>
 
 
 <script>
 
-let questions = {
+let questions=[
 
-1:[
-{q:"Who is known as the father of computer?",o:["Charles Babbage","Alan Turing","Bill Gates","John Von Neumann"],a:0},
-{q:"The physical parts of a computer are called:",o:["Software","Hardware","Firmware","Utilities"],a:1},
+{q:"Who is known as father of computer?",o:["Charles Babbage","Alan Turing","Bill Gates","Steve Jobs"],a:0},
+{q:"CPU stands for?",o:["Central Processing Unit","Control Program Unit","Central Program Utility","Computer Power Unit"],a:0},
+{q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1},
+{q:"Which memory is temporary?",o:["ROM","RAM","Hard disk","DVD"],a:1},
+{q:"Binary number system base is?",o:["2","8","10","16"],a:0},
+{q:"Decimal number system base is?",o:["2","8","10","16"],a:2},
+{q:"ASCII is used for?",o:["Character encoding","Networking","Operating system","Programming"],a:0},
+{q:"AI stands for?",o:["Artificial Intelligence","Advanced Internet","Automatic Input","Artificial Interface"],a:0},
+{q:"IoT stands for?",o:["Internet of Things","Input of Technology","Internet of Technology","Interface of Things"],a:0},
+{q:"Cloud computing stores data?",o:["Internet servers","Hard disk","USB","DVD"],a:0},
+{q:"Algorithm means?",o:["Step-by-step solution","Programming language","Computer hardware","Memory unit"],a:0},
+{q:"Flowchart uses?",o:["Symbols","Numbers","Words","Pictures"],a:0},
+{q:"Python is?",o:["Programming language","Operating system","Database","Browser"],a:0},
+{q:"Comment symbol in Python?",o:["#","//","--","**"],a:0},
+{q:"Loop used when condition true?",o:["while","switch","case","goto"],a:0},
+{q:"Function defined using?",o:["def","fun","define","function"],a:0},
+{q:"String stores?",o:["Characters","Numbers","Images","Videos"],a:0},
+{q:"List symbol?",o:["[]","()","{}","<>"],a:0},
+{q:"Tuple symbol?",o:["()","[]","{}","<>"],a:0},
+{q:"Dictionary uses?",o:["Key value pairs","Numbers","Characters","Images"],a:0},
+{q:"Digital footprint means?",o:["Online trace","Computer memory","Software","Hardware"],a:0},
+{q:"Unauthorized access is?",o:["Hacking","Programming","Formatting","Scanning"],a:0},
+{q:"Which is output device?",o:["Printer","Keyboard","Mouse","Scanner"],a:0},
 {q:"Which generation used vacuum tubes?",o:["First","Second","Third","Fourth"],a:0},
-{q:"Which device is used to enter data?",o:["Monitor","Printer","Keyboard","Speaker"],a:2},
-{q:"CPU stands for:",o:["Central Processing Unit","Computer Processing Unit","Central Programming Unit","Control Processing Unit"],a:0},
-{q:"Which is a storage device?",o:["Keyboard","Mouse","Hard disk","Monitor"],a:2},
-{q:"RAM is:",o:["Permanent memory","Temporary memory","Secondary memory","Optical memory"],a:1},
-{q:"Which is an output device?",o:["Printer","Keyboard","Scanner","Joystick"],a:0},
-{q:"Microprocessors belong to which generation?",o:["Second","Third","Fourth","Fifth"],a:2},
-{q:"Which is not a type of computer?",o:["Analog","Digital","Hybrid","Manual"],a:3}
-],
+{q:"Hexadecimal base?",o:["16","10","8","2"],a:0},
+{q:"Binary of 5?",o:["101","110","111","100"],a:0},
+{q:"Which is storage device?",o:["Hard disk","Keyboard","Mouse","Monitor"],a:0},
+{q:"Python file extension?",o:[".py",".java",".cpp",".html"],a:0},
+{q:"for loop used for?",o:["Iteration","Condition","Storage","Input"],a:0},
+{q:"Cybercrime means?",o:["Crime using computer","Programming","Typing","Browsing"],a:0}
 
-2:[
-{q:"Binary number system base is:",o:["2","8","10","16"],a:0},
-{q:"Decimal number system base is:",o:["2","8","10","16"],a:2},
-{q:"Hexadecimal digits include:",o:["0–7","0–9","0–9 and A–F","A–Z"],a:2},
-{q:"Which code represents characters?",o:["ASCII","BCD","EBCDIC","Unicode"],a:0},
-{q:"Binary equivalent of decimal 5:",o:["101","111","100","110"],a:0}
-],
-
-3:[
-{q:"AI stands for:",o:["Artificial Intelligence","Automatic Internet","Advanced Interface","Artificial Internet"],a:0},
-{q:"IoT stands for:",o:["Internet of Things","Input of Technology","Interface of Things","Internet of Technology"],a:0},
-{q:"Cloud computing means:",o:["Storing data on internet servers","Weather computing","Using local storage","Offline computing"],a:0}
-],
-
-4:[
-{q:"Step-by-step solution is called:",o:["Algorithm","Program","Flowchart","Loop"],a:0},
-{q:"Flowcharts use:",o:["Symbols","Numbers","Codes","Letters"],a:0},
-{q:"Oval symbol represents:",o:["Process","Start/Stop","Input","Decision"],a:1}
-],
-
-5:[
-{q:"Python is a:",o:["Programming language","Operating system","Browser","Database"],a:0},
-{q:"Symbol for comments:",o:["#","//","/*","--"],a:0},
-{q:"Keyword to define function:",o:["func","define","def","function"],a:2}
-],
-
-6:[
-{q:"Which loop repeats while condition true?",o:["for","while","switch","case"],a:1}
-],
-
-7:[
-{q:"Function is defined using:",o:["def","fun","define","function"],a:0}
-],
-
-8:[
-{q:"Strings store:",o:["Numbers","Characters","Images","Files"],a:1}
-],
-
-9:[
-{q:"Lists are written using:",o:["()","[]","{}","<>"],a:1}
-],
-
-10:[
-{q:"Tuples are written using:",o:["()","[]","{}","<>"],a:0}
-],
-
-11:[
-{q:"Unauthorized access to computer is:",o:["Hacking","Programming","Processing","Formatting"],a:0},
-{q:"Digital footprint means:",o:["Online trace of user","Computer memory","Software program","Virus"],a:0}
 ]
 
-};
-
-
-let chapterQuestions=[]
 let current=0
 let score=0
 let selected=null
-let time=0
-let totalTime=0
-let timerInterval
-let answers=[]
+let time=1800
+let totalTime=1800
 
-
-function startChapter(chapter,t){
-
-chapterQuestions=questions[chapter]
-time=t
-totalTime=t
-
-document.getElementById("home").style.display="none"
-document.getElementById("quiz").style.display="block"
-
-startTimer()
-showQuestion()
-
-}
-
-
-function startTimer(){
-
-timerInterval=setInterval(()=>{
+let timer=setInterval(()=>{
 
 time--
 
@@ -233,19 +153,19 @@ finishQuiz()
 
 },1000)
 
-}
-
 
 function showQuestion(){
 
-let q=chapterQuestions[current]
+let q=questions[current]
 
 document.getElementById("question").innerText=(current+1)+". "+q.q
 
 let html=""
 
 q.o.forEach((opt,i)=>{
-html+=`<div class="option" onclick="selectOption(${i})">${opt}</div>`
+
+html+=`<div class="option" onclick="selectOption(${i},this)">${opt}</div>`
+
 })
 
 document.getElementById("options").innerHTML=html
@@ -254,23 +174,25 @@ selected=null
 
 }
 
+function selectOption(i,el){
 
-function selectOption(i){
 selected=i
-}
 
+document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"))
+
+el.classList.add("selected")
+
+}
 
 function nextQuestion(){
 
-answers.push(selected)
-
-if(selected===chapterQuestions[current].a){
+if(selected===questions[current].a){
 score++
 }
 
 current++
 
-if(current>=chapterQuestions.length){
+if(current>=questions.length){
 finishQuiz()
 }else{
 showQuestion()
@@ -278,32 +200,22 @@ showQuestion()
 
 }
 
-
 function finishQuiz(){
 
-clearInterval(timerInterval)
+clearInterval(timer)
 
 document.getElementById("quiz").style.display="none"
 document.getElementById("result").style.display="block"
 
+document.getElementById("score").innerText="Score: "+score+" / "+questions.length
+
 let timeUsed=totalTime-time
 
-document.getElementById("score").innerText="Score: "+score+" / "+chapterQuestions.length
 document.getElementById("timeTaken").innerText="Time Taken: "+timeUsed+" seconds"
 
-let reviewHTML=""
-
-chapterQuestions.forEach((q,i)=>{
-
-reviewHTML+="<p><b>"+(i+1)+". "+q.q+"</b><br>"
-reviewHTML+="Correct: "+q.o[q.a]+"<br>"
-reviewHTML+="Your Answer: "+(answers[i]!=null?q.o[answers[i]]:"Not Answered")+"</p><hr>"
-
-})
-
-document.getElementById("review").innerHTML=reviewHTML
-
 }
+
+showQuestion()
 
 </script>
 
